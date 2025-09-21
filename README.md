@@ -8,7 +8,7 @@ Dashboard fonctionnel avec quelques optimisations en cours sur la réactivité d
 
 ## Démo Live
 
-**Dashboard :** [Prédictions & Optimisation ML](https://predictions-regularite-tgv.streamlit.app/)
+**Dashboard :** [Prédictions & Optimisation ML](https://optimisation-transport.streamlit.app/)
 
 ## Résultats
 
