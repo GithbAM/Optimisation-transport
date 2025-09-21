@@ -14,7 +14,7 @@ Dashboard fonctionnel avec quelques optimisations en cours sur la réactivité d
 
 | Modèle | CV MAE | CV RMSE | **CV R²** | Hold-out MAE |
 |--------|--------|---------|-----------|--------------|
-| **Linear Regression (Optimisé)** | **14.70 pts** | **18.37 pts** | **0.263** | **🎯 14.25 pts** |
+| **Linear Regression** | **14.70 pts** | **18.37 pts** | **0.263** | **🎯 14.25 pts** |
 | Random Forest | 15.41 pts | 19.26 pts | 0.204 | - |
 | XGBoost | 15.25 pts | 19.10 pts | 0.220 | - |
 | LightGBM | 15.07 pts | 18.80 pts | 0.241 | - |
