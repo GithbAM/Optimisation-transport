@@ -1,4 +1,4 @@
-# Pipeline de Prédiction Régularité TGV ML
+# Pipeline de Prédiction Régularité TGV
 
 > Système de prédiction et optimisation de la régularité des trains TGV avec **MAE 14.25 pts** et dashboard Streamlit interactif
 
