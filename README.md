@@ -8,7 +8,7 @@ Dashboard fonctionnel avec quelques optimisations en cours sur la réactivité d
 
 ## Démo Live
 
-**Dashboard :** [Prédictions & Optimisation ML](https://optimisation-transport.streamlit.app/)
+**Dashboard :** [Transport Public Dashboard](https://optimisation-transport.streamlit.app/)
 
 ## Résultats
 
