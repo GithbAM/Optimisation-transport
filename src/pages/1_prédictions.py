@@ -3,7 +3,7 @@
 
 # In[ ]:
 
-
+from pathlib import Path
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -20,11 +20,13 @@ st.set_page_config(page_title="Prédictions & Optimisation ML", page_icon="🤖"
 # CHARGEMENT 
 @st.cache_resource
 def load_model():
-    return joblib.load("best_punctuality_model.pkl")
+    model_path = Path(__file__).resolve().parents[2] / "models" / "best_punctuality_model.pkl"
+    return joblib.load(model_path)
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("regularite-mensuelle-tgv-aqst.csv", sep=';', encoding='utf-8')
+    data_path = Path(__file__).resolve().parents[2] / "data" / "regularite-mensuelle-tgv-aqst.csv"
+    df = pd.read_csv(data_path, sep=';', encoding='utf-8')
     df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
     df["periode"] = pd.to_datetime(df["date"], format="%Y-%m")
     df['mois'] = df['periode'].dt.month
@@ -148,7 +150,8 @@ model   = load_model()
 raw_model = model.named_steps["reg"]
 
 df_hist = load_data()
-analyses = joblib.load("analyses.bz2")
+analyses_path = Path(__file__).resolve().parents[2] / "models" / "analyses.bz2"
+analyses = joblib.load(analyses_path)
 
 # CONSTANTS 
 LABELS = {
