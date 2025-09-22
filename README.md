@@ -100,5 +100,5 @@ print(f"CO₂ évité/an: {simulation['co2_kg_an']:,.0f} kg")
 pip install streamlit pandas numpy plotly scikit-learn xgboost lightgbm joblib
 
 # Lancement dashboard
-streamlit run pages/1_prédictions.py
+streamlit run src/old_app.py
 ```
