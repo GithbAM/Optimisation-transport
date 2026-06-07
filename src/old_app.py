@@ -21,24 +21,24 @@ if 'results' not in st.session_state:
     st.session_state.results = None
 
 # TITRE
-st.markdown("# 🚆 Transport Public France – Prédictions ML")
+st.markdown("# Transport Public France – Prédictions ML")
 st.caption("Upload des données SNCF & IDF puis accès aux prédictions et optimisation intelligente.")
 
 # UPLOAD
 with st.sidebar:
-    st.markdown("### 📁 Upload datasets")
+    st.markdown("### Upload datasets")
     st.file_uploader("SNCF – Régularité TGV (CSV)", type="csv", key="sncf")
-    if st.button("🚀 Lancer analyse", type="primary"):
+    if st.button("Lancer analyse", type="primary"):
         st.session_state.data_loaded = True
         st.success("Analyses prêtes – rendez-vous dans Prédictions")
 
 # MODE D’EMPLOI
 if not st.session_state.data_loaded:
-    st.info("👈 Upload du fichier via la barre latérale puis cliquez sur **Lancer analyse**.")
+    st.info("Upload du fichier via la barre latérale puis cliquez sur **Lancer analyse**.")
     with st.expander("Formats attendus"):
         st.markdown("""
         **SNCF** : colonnes `periode`, `service`, `liaisons`, `nombre_de_trains_programmes`, `taux_regularite`  
         """)
 else:
-    st.success("✅ Données chargées – rendez-vous dans la page **Prédictions**")
+    st.success("Données chargées – rendez-vous dans la page **Prédictions**")
 
