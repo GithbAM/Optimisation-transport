@@ -132,7 +132,7 @@ print(f"MAE hold-out final : {hold_mae:.2f} %")
 # ------------------------------------------------------------------
 MODEL_PATH = "best_punctuality_model.pkl"
 joblib.dump(final_pipe, MODEL_PATH)
-print("✅ best_punctuality_model.pkl sauvegardé")
+print("best_punctuality_model.pkl sauvegardé")
 print(f"Modèle sauvegardé sous {MODEL_PATH}")
 
 # ------------------------------------------------------------------
@@ -207,7 +207,7 @@ analyses = {
 # 10.  Sauvegardes finales
 # ------------------------------------------------------------------
 joblib.dump(analyses, "analyses.bz2")
-print("✅ analyses.bz2 sauvegardé")
+print("analyses.bz2 sauvegardé")
 
 
 # In[ ]:
