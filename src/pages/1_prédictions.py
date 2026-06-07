@@ -166,8 +166,8 @@ LABELS = {
 
 # Résumé métier 
 st.info(
-    f"🚄 **Régularité moyenne TGV** : `{df_hist.taux_regularite.mean():.1f} %`  \n"
-    f"🔴 **Liaison la plus en retard** : "
+    f" **Régularité moyenne TGV** : `{df_hist.taux_regularite.mean():.1f} %`  \n"
+    f" **Liaison la plus en retard** : "
     f"`{analyses['sncf_performance']['problematic_liaisons'].iloc[0]['liaisons']}` "
     f"(`{analyses['sncf_performance']['problematic_liaisons'].iloc[0]['taux_retard']:.1f} %`)"
 )
@@ -180,17 +180,17 @@ with st.sidebar:
     nb_trains = st.number_input("Nb trains programmés", min_value=1, max_value=500, value=150)
 
 # TABS 
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Prédiction", "🧮 Simulateur", "📈 Projections", "🏆 Priorités"])
+tab1, tab2, tab3, tab4 = st.tabs(["Prédiction", "Simulateur", "Projections", "Priorités"])
 
 # Prédiction temps réel
 with tab1:
-    st.markdown("#### 🎯 Prédiction de régularité")
+    st.markdown("#### Prédiction de régularité")
     
     baseline = calculate_baseline_metrics(liaison, date_pred, nb_trains, df_hist, model)
     
     if baseline is None:
-        st.error(f"❌ Aucune donnée disponible pour **{liaison}**")
-        st.info("💡 Sélectionnez une autre liaison dans la barre latérale")
+        st.error(f"Aucune donnée disponible pour **{liaison}**")
+        st.info("Sélectionnez une autre liaison dans la barre latérale")
     else:
         pred = baseline['pred_base']
         ic = baseline['ic']
@@ -198,52 +198,52 @@ with tab1:
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            st.metric("🎯 Régularité prédite", f"{pred:.1f}%")
+            st.metric("Régularité prédite", f"{pred:.1f}%")
         
         with col2:
-            st.metric("⚠️ Retard estimé", f"{100-pred:.1f}%", 
+            st.metric("Retard estimé", f"{100-pred:.1f}%", 
                      help="Complément de la régularité (100% - régularité)")
         
         with col3:
-            st.metric("📊 Moy. historique", f"{baseline['historical_avg']:.1f}%",
+            st.metric("Moy. historique", f"{baseline['historical_avg']:.1f}%",
                      delta=f"{pred - baseline['historical_avg']:+.1f}%")
         
         with col4:
-            st.metric("🔣 Intervalle 95%", f"±{ic:.1f}%",
+            st.metric("Intervalle 95%", f"±{ic:.1f}%",
                      help=f"[{pred-ic:.1f}% - {pred+ic:.1f}%]")
 
 # Simulateur d’amélioration
 with tab2:
-    st.markdown("#### 🧮 Simulateur d'améliorations")
+    st.markdown("#### Simulateur d'améliorations")
     
     baseline = calculate_baseline_metrics(liaison, date_pred, nb_trains, df_hist, model)
     
     if baseline is None:
-        st.error(f"❌ Impossible de simuler pour **{liaison}**")
+        st.error(f"Impossible de simuler pour **{liaison}**")
     else:
         # Slider SANS valeur par défaut fixe
         st.markdown(f"**Liaison analysée** : `{liaison}`")
         st.markdown(f"**Période** : `{date_pred.strftime('%Y-%m')}`")
         
         improvement = st.slider(
-            "🚀 Investissement d'amélioration (%)", 
-            min_value=0, max_value=50, value=0, step=5,  # ⚠️ VALEUR PAR DÉFAUT 0
+            "Investissement d'amélioration (%)", 
+            min_value=0, max_value=50, value=0, step=5,  # VALEUR PAR DÉFAUT 0
             help="Augmentation budget → + trains + améliorations opérationnelles"
         )
         
         if improvement == 0:
-            st.info("👆 Ajustez le curseur pour voir l'impact des améliorations")
+            st.info("Ajustez le curseur pour voir l'impact des améliorations")
         else:
             simulation = simulate_improvement(baseline, improvement, model, liaison, date_pred, df_hist)
             
             if simulation:
                 st.markdown("---")
-                st.markdown("### 📈 Résultats de la simulation")
+                st.markdown("### Résultats de la simulation")
                 
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    st.markdown("**🚂 Impact opérationnel**")
+                    st.markdown("**Impact opérationnel**")
                     st.metric("Trains/mois", f"{simulation['new_trains']}", 
                              delta=f"+{simulation['new_trains'] - baseline['nb_trains_base']}")
                     st.metric("Δ Régularité", f"{simulation['delta_reg']:+.2f}%",
@@ -251,7 +251,7 @@ with tab2:
                              delta_color="normal" if simulation['delta_reg'] > 0 else "inverse")
                 
                 with col2:
-                    st.markdown("**🌍 Impact environnemental**")
+                    st.markdown("**Impact environnemental**")
                     st.metric("CO₂ évité/an", f"{simulation['co2_kg_an']:,.0f} kg")
                     st.metric("Valeur carbone", f"{simulation['co2_kg_an']/1000*85:,.0f} €",
                              help="Basé sur 85€/tonne CO₂")
@@ -289,52 +289,52 @@ with tab3:
         })
         st.dataframe(recap, hide_index=True, use_container_width=True)
     else:
-        st.warning("❌ Impossible de calculer les projections sans données historiques")
+        st.warning("Impossible de calculer les projections sans données historiques")
 
 # Top priorités
 with tab4:
-    st.markdown("#### 🏆 Priorités d'action")
+    st.markdown("#### Priorités d'action")
     
     baseline = calculate_baseline_metrics(liaison, date_pred, nb_trains, df_hist, model)
     
     if baseline is None:
-        st.warning("❌ Analyse impossible sans données")
+        st.warning("Analyse impossible sans données")
     else:
         if isinstance(raw_model, LinearRegression):
             # Importance générale
-            st.markdown("##### 📊 Importance des variables (globale)")
+            st.markdown("##### Importance des variables (globale)")
             try:
                 imp = joblib.load("linear_impact.bz2")
                 for i, (_, row) in enumerate(imp.head(3).iterrows()):
-                    with st.expander(f"🎯 #{i+1} - {LABELS.get(row['feature'], row['feature'])}"):
+                    with st.expander(f"#{i+1} - {LABELS.get(row['feature'], row['feature'])}"):
                         if row["impact"] > 0:
-                            st.success(f"✅ **Augmenter** cette variable → gain **+{row['impact']:.1f} pts** par écart-type")
+                            st.success(f"**Augmenter** cette variable → gain **+{row['impact']:.1f} pts** par écart-type")
                         else:
-                            st.error(f"⚠️ **Diminuer** cette variable → gain **{abs(row['impact']):.1f} pts** par écart-type")
+                            st.error(f"**Diminuer** cette variable → gain **{abs(row['impact']):.1f} pts** par écart-type")
                             
                         # Contexte spécifique à la liaison
                         if row['feature'] == 'nombre_de_circulations_prévues':
-                            st.info(f"💡 **Pour {liaison}** : actuellement {nb_trains} trains programmés")
+                            st.info(f"**Pour {liaison}** : actuellement {nb_trains} trains programmés")
                         elif row['feature'] in ['lag_1', 'lag_7', 'ma_7']:
                             hist_val = baseline.get('historical_avg', 0)
-                            st.info(f"💡 **Pour {liaison}** : régularité historique moyenne {hist_val:.1f}%")
+                            st.info(f"**Pour {liaison}** : régularité historique moyenne {hist_val:.1f}%")
                             
             except FileNotFoundError:
-                st.error("❌ Fichier d'analyse d'importance non trouvé")
+                st.error("Fichier d'analyse d'importance non trouvé")
         else:
-            st.info("ℹ️ Analyse d'importance disponible uniquement pour la régression linéaire")
+            st.info("Analyse d'importance disponible uniquement pour la régression linéaire")
             
         # Recommandations spécifiques
-        st.markdown("##### 🎯 Recommandations pour cette liaison")
+        st.markdown("#####Recommandations pour cette liaison")
         
         if baseline['pred_base'] < baseline['historical_avg']:
-            st.warning(f"⚠️ Performance prédite ({baseline['pred_base']:.1f}%) inférieure à la moyenne historique ({baseline['historical_avg']:.1f}%)")
+            st.warning(f"Performance prédite ({baseline['pred_base']:.1f}%) inférieure à la moyenne historique ({baseline['historical_avg']:.1f}%)")
             st.markdown("**Actions recommandées** :")
-            st.markdown("- 🔧 Maintenance préventive accrue")
-            st.markdown("- 📊 Analyse des causes de dégradation")
+            st.markdown("- Maintenance préventive accrue")
+            st.markdown("- Analyse des causes de dégradation")
         else:
-            st.success(f"✅ Performance prédite ({baseline['pred_base']:.1f}%) supérieure à la moyenne")
+            st.success(f"Performance prédite ({baseline['pred_base']:.1f}%) supérieure à la moyenne")
             st.markdown("**Actions d'optimisation** :")
-            st.markdown("- 🚀 Capitaliser sur les bonnes pratiques") 
-            st.markdown("- 📈 Augmenter la fréquence si demande")   
+            st.markdown("- Capitaliser sur les bonnes pratiques") 
+            st.markdown("- Augmenter la fréquence si demande")   
 
